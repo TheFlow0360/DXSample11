@@ -1,0 +1,45 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DXSample11"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:filtering="clr-namespace:DXSample11.Filtering"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        x:Class="DXSample11.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="350"
+        Width="525">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/DXSample11;component/Filtering/DummyFilter.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <dxg:GridControl AutoGenerateColumns="None"
+                         DataSource="{Binding Items}">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="Id"
+                                AllowColumnFiltering="False"
+                                AllowEditing="False" />
+                <dxg:GridColumn FieldName="LinkedId"
+                                FilterPopupMode="Custom"
+                                CustomColumnFilterPopupTemplate="{StaticResource DummyPopupFilterTemplate}"
+                                ImmediateUpdateAutoFilter="True"
+                                AllowColumnFiltering="True"
+                                AllowEditing="False">
+                    <dxg:GridColumn.EditSettings>
+                        <filtering:DummyFilterEditSettings ItemTemplate="{StaticResource DummyItemTemplate}" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>    
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.View>
+                <dxg:TableView ShowAutoFilterRow="True"></dxg:TableView>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+
+    </Grid>
+</Window>

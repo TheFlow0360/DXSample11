@@ -1,0 +1,73 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:filtering="clr-namespace:DXSample11.Filtering"
+                    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid">
+    <filtering:DummyVisibilityConverter x:Key="MarkerVisibilityConverter" />
+    <Style x:Key="DummyPopupFilterControlStyle"
+           TargetType="{x:Type filtering:DummyPopupFilterControl}">
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type filtering:DummyPopupFilterControl}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <ListBoxItem Margin="1">
+                                <CheckBox IsChecked="{Binding SelectAllState, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                                    <TextBlock Text="(select all)" />
+                                </CheckBox>
+                            </ListBoxItem>
+                            <ListBox ItemsSource="{Binding Path=Items,
+                                                           RelativeSource={RelativeSource TemplatedParent}}"
+                                     ItemTemplate="{Binding Path=ItemTemplate,
+                                                            RelativeSource={RelativeSource TemplatedParent}}"
+                                     BorderThickness="0"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="{x:Type filtering:DummyWrapper}">
+                    <CheckBox IsChecked="{Binding .Checked,
+                                                  Mode=TwoWay}">
+                        <DockPanel>
+                            <Ellipse Fill="Gray"
+                                     Width="8"
+                                     Height="8"
+                                     Visibility="{Binding Value, Converter={StaticResource MarkerVisibilityConverter}}" />
+                            <TextBlock Margin="5,0,0,0"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding DisplayText}" />
+                        </DockPanel>
+                    </CheckBox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <DataTemplate x:Key="DummyPopupFilterTemplate" DataType="{x:Type dxg:CustomColumnFilterContentPresenter}">
+        <filtering:DummyPopupFilterControl Style="{StaticResource DummyPopupFilterControlStyle}"
+                                           ColumnFieldName="{Binding Path=ColumnFilterInfo.Column.FieldName,
+                                                                     RelativeSource={RelativeSource TemplatedParent},
+                                                                     Mode=OneWay}"
+                                           Filter="{Binding Path=CustomColumnFilter,
+                                                            RelativeSource={RelativeSource TemplatedParent},
+                                                            Mode=TwoWay}" />
+    </DataTemplate>
+    <DataTemplate x:Key="DummyItemTemplate"  DataType="{x:Type filtering:DummyWrapper}">
+        <DockPanel>
+            <!-- this is just to demonstrate the additional visual changes -->
+            <Ellipse Fill="Gray"
+                     Width="8"
+                     Height="8"
+                     Visibility="{Binding Value, Converter={StaticResource MarkerVisibilityConverter}}" />
+            <TextBlock Margin="5,0,0,0"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Center"
+                       Text="{Binding DisplayText}" />
+        </DockPanel>
+    </DataTemplate>
+</ResourceDictionary>
