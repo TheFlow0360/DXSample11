@@ -34,7 +34,14 @@
                     <dxg:GridColumn.EditSettings>
                         <filtering:DummyFilterEditSettings ItemTemplate="{StaticResource DummyItemTemplate}" />
                     </dxg:GridColumn.EditSettings>
-                </dxg:GridColumn>    
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="LinkedId2"
+                                UnboundType="Integer"
+                                UnboundExpression="{Binding Source={x:Static system:Int32.MinValue}, StringFormat='iif(Not IsNull(LinkedId),LinkedId,{0})'}">
+                    <dxg:GridColumn.EditSettings>
+                        <filtering:DummyFilterEditSettings ItemTemplate="{StaticResource DummyItemTemplate}" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
                 <dxg:TableView ShowAutoFilterRow="True"></dxg:TableView>

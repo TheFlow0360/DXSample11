@@ -30,7 +30,7 @@ namespace DXSample11.Filtering
             _items.Clear();
             
             // null item 
-            _items.Add(new DummyWrapper());
+            _items.Add(new DummyWrapper(Int32.MinValue));
 
             // default items
             _items.Add(new DummyWrapper(1));
